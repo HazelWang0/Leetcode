@@ -107,35 +107,36 @@
   > - 翻转二叉树  
   > - 填充每个二叉树节点的右侧指针  
   > - 将二叉树展开为链表  
-  > - 构造最大二叉树  
+  > - 构造最大二叉树: 前序遍历很容易得到root，中序遍历很容易得到左右子树；通过前序后序遍历结果无法确定唯一的原始二叉树    
   > - 通过前序遍历和中序遍历构造二叉树  
   > - 通过后序遍历和中序遍历构造二叉树  
   > - 通过后序遍历和前序遍历构造二叉树  
   > - 寻找重复的子树
-  > - 二叉树的序列化与反序列化  
+  > - 【~】二叉树的序列化与反序列化: 不明白  
 
 - 归并排序  
-  > - 计算右侧小于当前元素的个数  
+  > - 【~】计算右侧小于当前元素的个数 ：只计算在右侧的归并 
   > - 区间和的个数   
   > - 翻转对  
-  > - 排序数组  
+  > - 【~】排序数组：不会  
 
-- 二叉搜索树BST(AVL树，红黑树，自平衡性质；B+树，线段树)  
+- 二叉搜索树BST(AVL树，红黑树，自平衡性质；B+树，线段树；中序遍历是升序)  
   > - 寻找第K小的元素  
   > - BST转化累加树  
   > - 判断BST合法性  
   > - 在BST中搜索元素  
   > - 在BST中插入元素  
   > - 在BST中删除元素  
+  > - 【~】不同二叉搜索树  
   > - 计算有效BST总数
 
-- 快速排序（就是二叉树的前序遍历）  
+- 快速排序（就是二叉树的前序遍历）: 空间复杂度为树高 O(NlogN)， 时间复杂度N；快速选择，最好是  O(N)，最差是O(N^2)；引入shuffle避免极端情况，随机化之后的快速选择算法的复杂度可以认为是 O(N)
+  > - 【~】排序数组  
   > - 数组中的第K大个最大元素  
-  > - 排序数组  
 
 - 其它 
-  > - 扁平化嵌套列表迭代器  
-  > - 最近公共祖先
+  > - 【~】扁平化嵌套列表迭代器（N叉树的遍历）：完善接口    
+  > - 【~】最近公共祖先
   > - 计算完全二叉树的节点个数  
 
 **图**
@@ -197,10 +198,10 @@
   > - 零钱兑换 
   > - 斐波那契数列 
   > - 下降路径最小和  
-  > - 单词拆分  
+  > - 【~】单词拆分  
  
-- 子序列  
-  > - 最长递增子序列  
+- 子序列（如果无法用数学归纳法递推，说明dp数组定义是不恰当的）  
+  > - 【~】最长递增子序列： 区间迭代+递归；陷阱:如果子问题变成0~n区间内的最大子序列长度，问题很简单，复杂度为n，但此时新加入一个元素后无法简单地递归，原始区间的最值子序列不一定是新加后的最值子序列了，此时问题变得不确定。因此要把问题单边固定，让子问题中新加元素成为确定的边界，尽管问题会复杂化，复杂度变n^2，但是是可以确定的  
   > - 俄罗斯套娃信封  
   > - 编辑距离  
   > - 不同的子序列  
@@ -211,11 +212,11 @@
   > - 最长回文子序列  
 
 
-- 背包
+- 背包 (如果是dp法，可以路径压缩，i的迭代可以忽略，因为可以更新掉; 但j的更新要从后开始，因为二维dp[i][j]是從dp[i-1][j]来的,变一维后正序则从dp[i][j]变来 )
   > - 0-1背包问题  
-  > - 分割等和子集： 子集背包问题    
-  > - 零钱兑换： 完全背包问题   
-  > - 目标和   
+  > - 【~】分割等和子集： 子集背包问题：bool类型的dp法，可以用表达式  dp[i][j] = dp[xxx] || dp[xx];   
+  > - 【~】零钱兑换： 完全背包问题：搞清楚二维遍历，谁先谁后，虽然是每个i都遍历一轮j，但是每个dp[i]的值都是来自dp[i-1]，所以这样本质上是斜的遍历，即同时遍历了i，j，而不是先j后i
+  > - 目标和： 
   
 - 游戏  
   > - 最小路径和  
@@ -235,14 +236,14 @@
   > - 无重叠区间  
   > - 用最少数量的箭引爆气球   
   > - 安排会议室   
-  > - 视频拼接  
-  > - 跳跃游戏  
+  > - 【~】视频拼接  
+  > - 【#】跳跃游戏  
 
 **技巧** 
 - 暴力搜索（回溯）
   > - 全排列  
   > - N皇后  
-  > - 划分为k个相等的子集  
+  > - 【~】划分为k个相等的子集：回溯和动规的区别，动规不用穷举，只有一种结果/判断是否可行，但回溯需要*撤销选择*，以遍历所有可能进行穷举; 如何尽可能的剪枝; 备忘录剪枝; 我们应该尽量「少量多次」，就是说宁可多做几次选择（乘法关系），也不要给太大的选择空间（指数关系）；做 n 次「k 选一」仅重复一次（O(k^n)），比 n 次「二选一」重复 k 次（O(k*2^n)）效率低很多  
   > - 组合总和  
   > - 子集：元素无重不可复选 ， 元素可重不可复选  
   > - 全排列  
@@ -262,6 +263,11 @@
   > - 二叉树的最小深度
   > - 打开转盘锁（）
   > - 滑动谜题 
+
+- 数学运算技巧  
+  > - 随机算法
+  > - 【】模幂
+
   
 **经典面试题** 
 - 分治
@@ -297,10 +303,270 @@ vector是数组，申明是vector<int>& num， 快慢指针可以直接用int fa
 字符串： char c = s[right];  s.size()  
 打补丁： return nums[left] == target ? left : -1;
 栈： std::stack<int> s;  s.pop() ;s.push()  
+最值 int res = INT_MAX  
+需要初始化大小，如果会变，那么选最大的可能数量  vector<int> top(nums.size());  
+min要重写  
+```
+int min(int a, int b, int c) {
+    return min(a, min(b, c));
+}
+```
+动规dp vector<vector<bool>> dp(n + 1, vector<bool>(sum + 1));
+二维 vector<vector<int>> memo，没有初始化 
+
+降序排列vector
+```
+sort(nums.begin(), nums.end(), greater<int>());
+for (int i = 0, j = nums.size() - 1; i < j; i++, j--) {
+    // 交换 nums[i] 和 nums[j]
+    int temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
+}
+```
+将bool的数组转为memo的哈希表，需要转为string：
+```
+// 将 used 的状态转化成形如 [true, false, ...] 的字符串
+// 便于存入 HashMap
+stringstream ss;
+for (bool b : used) {
+    ss << b;
+}
+string state = ss.str();
+```
+进一步，不用哈希表表示，而用位图:用整数 used 的第 i 位（(used >> i) & 1）的 1/0 来表示 used[i] 的 true/false
+```
+int used = 0; // 使用位图技巧，记录每个元素是否被选择
+if ((used >> i) & 1 == 1) // 剪枝, 判断第 i 位是否是 1
+used |= 1 << i; // 做选择, 将第 i 位置为 1
+used ^= 1 << i; // 撤销选择, 使用异或运算将第 i 位恢复 0
+```
+自定义排序
+```
+sort(clips.begin(), clips.end(), [](const vector<int>& a, const vector<int>& b) {
+    if (a[0] == b[0]) {
+        return b[1] - a[1];
+    }
+    return a[0] - b[0];
+});
+```
+取随机：
+uniform_int_distribution<int> distribution(i, n - 1)
+
+二叉树：
+```
+TreeNode* constructMaximumBinaryTree(vector<int>& nums) {} //签名
+auto max_it = max_element(nums.begin(), nums.end()); // 找最大值
+int max_idx = distance(nums.begin(), max_it); // 得到最大值的idex
+TreeNode* root = new TreeNode(*max_it); //构造二叉树
+
+```
+
+动态数组
+```
+vector<int> left(nums.begin(), nums.begin() + max_idx); //构造vector
+```
+建立哈希映射
+```
+// 存储 inorder 中值到索引的映射
+unordered_map<int, int> valToIndex;
+for (int i = 0; i < inorder.size(); i++) {
+    valToIndex[inorder[i]] = i;
+}
+```
+deque记录结果
+```
+// 记录重复的子树根节点
+deque<TreeNode*> res;  
+res.emplace_back(root);
+```
+hashset是一维的，hashmap是二维的  
+
+字符串拼接
+```
+#include <string>
+stringstream ss;
+void traverse(TreeNode* root, stringstream& ss) {}
+  ss << NULL << SEP; //魔王
+  ss << root->val <<",";
+
+
+    // 将字符串转化成列表
+    vector<string> nodes;
+    stringstream ssin(data);
+    string val;
+    while (getline(ssin, val, ','))
+        nodes.push_back(val);
+    reverse(nodes.begin(), nodes.end());
+
+    //for call
+    vector<string>& nodes
+```
+一起的写法
+nums[p] = temp[i++];
+
+建类，建struct（类似类的属性）(归并排序)[https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-66994/gui-bing-p-1387f/]
+```
+class Solution {
+public:
+    struct Pair {
+        int val, id;
+        Pair(int val, int id) {
+            // 记录数组的元素值
+            this->val = val;
+            // 记录元素在数组中的原始索引
+            this->id = id;
+        }
+    };
+    Pair* temp;
+    Pair* arr = new Pair[n];
+    // 记录元素原始的索引位置，以便在 count 数组中更新结果
+    for (int i = 0; i < n; i++)
+        arr[i] = Pair(nums[i], i);
+}
+
+```
+预设vector长度
+```
+vector<int> temp(hi - lo + 1);
+```
+转换数据类型(不确定对不对)
+```
+(long long) nums[i] // nums 中的元素可能较大，乘 2 可能溢出，所以转化成 long long
+```
+
+直接修改函数名(二叉树小技巧：使用辅助函数，增加函数参数列表，在参数中携带额外信息)
+```
+bool isValidBST(TreeNode* root) {
+    return isValidBST(root, nullptr, nullptr);
+}
+
+bool isValidBST(TreeNode* root, TreeNode* min, TreeNode* max) {}
+```
+
+二叉树搜索目标的简化写法
+```
+TreeNode* searchBST(TreeNode* root, int target) {
+    if (root == nullptr) return nullptr;
+    if (root->val == target) return root;
+    // 当前节点没找到就递归地去左右子树寻找
+    TreeNode* left = searchBST(root->left, target);
+    TreeNode* right = searchBST(root->right, target);
+    return left != nullptr ? left : right;  //能走到这里一定是有返回的，至于是left还是right得判断
+}
+```
+插入
+```
+// 找到空位置插入新节点
+if (root == nullptr) return new TreeNode(val);
+```
+洗牌算法
+```
+// 洗牌算法，将输入的数组随机打乱
+static void shuffle(vector<int>& nums) {
+    srand((unsigned) time(NULL));
+    int n = nums.size();
+    for (int i = 0 ; i < n; i++) {
+        // 生成 [i, n - 1] 的随机数
+        int r = i + rand()%(n-i);
+        swap(nums[i], nums[r]);
+    }
+    }
+```
+数组交换
+```
+// 原地交换数组中的两个元素
+static void swap(int& a, int& b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+```
+二叉堆(Java 的 PriorityQueue 默认实现是小顶堆)
+```
+#include <queue>
+#include <vector>
+priority_queue<int, vector<int>, greater<int>> pq; // 小顶堆，堆顶是最小元素
+    pq.push(e);
+    pq.size();
+    pq.pop();
+    pq.top();
+```
+完善接口 [多叉树](https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-66994/ti-mu-bu-r-552fb/)
+```
+
+class NestedIterator {
+private: // 自己额外写的
+    vector<int> res;
+    vector<int>::iterator it;
+
+    // 遍历以 nestedList 为根的多叉树
+    void traverse(vector<NestedInteger>& nestedList) {
+        for (int i = 0; i < nestedList.size(); i++) {
+            if (nestedList[i].isInteger()) {
+                // 找到叶子节点
+                res.push_back(nestedList[i].getInteger());
+            } else {
+                // 递归遍历子列表
+                traverse(nestedList[i].getList());
+            }
+        }
+    }
+
+public:
+    NestedIterator(vector<NestedInteger>& nestedList) {
+        // 存放将 nestedList 打平的结果
+        traverse(nestedList);
+        // 得到 res 列表的迭代器
+        it = res.begin();
+    }
+
+    int next() { //题给的，内容自己实现
+        return *it++;
+    }
+
+    bool hasNext() { //题给的，内容自己实现
+        return it != res.end();
+    }
+};
+
+std::vector<NestedInteger> list;
+list.erase(list.begin()); 
+
+base case:
+```
+    // base case
+    if (root == nullptr) {
+        return nullptr;
+    }
+```
+如果有找到，返回找到的，如果没有找到，返回无
+```
+class Solution {
+public:
+    // 用于记录 p 和 q 是否存在于二叉树中
+    bool foundP = false, foundQ = false;
+        TreeNode* res = find(root, p->val, q->val);
+        if (!foundP || !foundQ) {
+        // 后序位置，判断当前节点是不是目标值
+        if (root->val == val1 || root->val == val2) {
+            // 找到了，记录一下
+            if (root->val == val1) foundP = true;
+            if (root->val == val2) foundQ = true;
+            return root;
+        }
+        }
+}
+```
 
 
 # Java  
 Integer 和 String 这种包装类不能直接用 == 进行相等判断，而应该使用类的 equals 方法  
+
+
+# python 
+random.Random.randint(0, n - i - 1)
+
 
 # NOTES
 - [**二叉堆**](https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-daeca/er-cha-dui-1a386/)  
@@ -322,7 +588,11 @@ Integer 和 String 这种包装类不能直接用 == 进行相等判断，而应
     - 前序位置的代码执行是自顶向下的，而后序位置的代码执行是自底向上；前序位置的代码只能从函数参数中获取父节点传递来的数据，而后序位置的代码不仅可以获取参数数据，还可以获取到子树通过函数返回值传递回来的数据    
     - 快速排序就是个二叉树的前序遍历，归并排序就是个二叉树的后序遍历 
     - 中序遍历是二叉树特有的，多叉树中不存在   
-    - 一旦题目和子树有关，那大概率要给函数设置合理的定义和返回值，在后序位置写代码了  
+    - 一旦题目和子树有关，那大概率要给函数设置合理的定义和返回值，在后序位置写代码了 
+    - 满二叉树是一种特殊的完全二叉树，每层都是是满的，像一个稳定的三角形   
+    - 完全二叉树每一层都是紧凑靠左排列的; 完全二叉树对应英文 Complete Binary Tree，没有问题。但是我们说的满二叉树对应英文 Perfect Binary Tree，而英文中的 Full Binary Tree 是指一棵二叉树的所有节点要么没有孩子节点，要么有两个孩子节点  
+    - 完全二叉树的时间复杂度是 O(logN*logN)     
+
 
 - [**动态规划**](https://labuladong.github.io/algo/di-ling-zh-bfe1b/dong-tai-g-1e688/)      
     核心思想是穷举求最值，列出正确的「状态转移方程」，才能正确地穷举。重叠子问题、最优子结构、状态转移方程是动态规划三要素，需要判断算法问题是否具备「最优子结构」，是否能够通过子问题的最值得到原问题的最值。
@@ -337,7 +607,9 @@ Integer 和 String 这种包装类不能直接用 == 进行相等判断，而应
     和动态规划类似，但不直接返回结果，用额外的数组来维护返回值   
     - **回溯算法和 DFS 算法的区别所在：回溯算法关注的不是节点，而是树枝**  
     核心就是 for 循环里面的递归，在递归调用之前「做选择」，在递归调用之后「撤销选择」  
-    回溯算法的一个特点，不像动态规划存在重叠子问题可以优化，回溯算法就是纯暴力穷举，复杂度一般都很高   
+    回溯算法的一个特点，不像动态规划存在重叠子问题可以优化，回溯算法就是纯暴力穷举，复杂度一般都很高 
+    选择视角：我们应该尽量「少量多次」，就是说宁可多做几次选择（乘法关系），也不要给太大的选择空间（指数关系）；做 n 次「k 选一」仅重复一次（O(k^n)），比 n 次「二选一」重复 k 次（O(k*2^n)）效率低很多   
+    加入剪枝       
     '''
     def backtrack(路径, 选择列表):
     if 满足结束条件:
@@ -388,6 +660,7 @@ Integer 和 String 这种包装类不能直接用 == 进行相等判断，而应
     二叉堆就是一种完全二叉树，所以适合存储在数组中，而且二叉堆拥有一些特殊性质。
     swim 和 sink 是主要的操作，来维护堆的性质（堆有序）
     优先级队列是基于二叉堆实现的，主要操作是插入和删除。插入是先插到最后，然后上浮到正确位置；删除是调换位置后再删除，然后下沉到正确位置   
+    二叉堆插入和删除的时间复杂度和堆中的元素个数有关，在这里我们堆的大小不会超过 k，所以插入和删除元素的复杂度是 O(logk)  
 
 
 - [**队列实现栈/栈实现队列**](https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-daeca/dui-lie-sh-88541/)  
