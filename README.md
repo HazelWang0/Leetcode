@@ -132,7 +132,7 @@
 
 - 快速排序（就是二叉树的前序遍历）: 空间复杂度为树高 O(NlogN)， 时间复杂度N；快速选择，最好是  O(N)，最差是O(N^2)；引入shuffle避免极端情况，随机化之后的快速选择算法的复杂度可以认为是 O(N)
   > - 【~】排序数组  
-  > - 数组中的第K大个最大元素  
+  > - 【~】数组中的第K大个最大元素 ： 堆的手写； 快速排序的手写 
 
 - 其它 
   > - 【~】扁平化嵌套列表迭代器（N叉树的遍历）：完善接口    
@@ -186,12 +186,12 @@
   > - 实现  
 
 - 其它  
-  > - LRU缓存  
-  > - LFU缓存  
+  > -【~】LRU缓存  
+  > -【~】LFU缓存  
   > - 数据流的中位数  
   > - 队列实现栈  
   > - 栈实现队列  
-  > - 设计推特   
+  > -【~】设计推特   
 
 **动态规划**
 - 基本
@@ -215,7 +215,7 @@
 - 背包 (如果是dp法，可以路径压缩，i的迭代可以忽略，因为可以更新掉; 但j的更新要从后开始，因为二维dp[i][j]是從dp[i-1][j]来的,变一维后正序则从dp[i][j]变来 )
   > - 0-1背包问题  
   > - 【~】分割等和子集： 子集背包问题：bool类型的dp法，可以用表达式  dp[i][j] = dp[xxx] || dp[xx];   
-  > - 【~】零钱兑换： 完全背包问题：搞清楚二维遍历，谁先谁后，虽然是每个i都遍历一轮j，但是每个dp[i]的值都是来自dp[i-1]，所以这样本质上是斜的遍历，即同时遍历了i，j，而不是先j后i
+  > - 【~】【~】零钱兑换： 完全背包问题：搞清楚二维遍历，谁先谁后，虽然是每个i都遍历一轮j，但是每个dp[i]的值都是来自dp[i-1]，所以这样本质上是斜的遍历，即同时遍历了i，j，而不是先j后i // 不能正着遍历，得倒着，否则会数组值越界！！
   > - 目标和： 
   
 - 游戏  
@@ -230,13 +230,13 @@
   > - 石子游戏    
   > - 四键键盘  
   > - 打家劫舍  
-  > - 股票买卖  
+  > - 【~】股票买卖  
 
 - 贪心
   > - 无重叠区间  
   > - 用最少数量的箭引爆气球   
   > - 安排会议室   
-  > - 【~】视频拼接  
+  > - 【~】【~】视频拼接: while嵌套循环 真的很烦!!!   
   > - 【#】跳跃游戏  
 
 **技巧** 
@@ -254,7 +254,7 @@
   > - 滑动谜题 
   
 - 岛屿（和Union-find很像）
-  > - 封闭岛屿的数量  
+  > - 【~】封闭岛屿的数量  
   > - 子岛屿的数量  
   > - 鸟岛的最大面积  
   > - 不同岛屿的数量   
@@ -295,8 +295,160 @@
 
 
 # C++
+字符串全排列
+```
+int main(){
+    int n = 112;
+    int m = 4;
+    string s = to_string(n);
+    sort(s.begin(), s.end());
+    int cnt = 0;
+    do{
+        if(stoi(s)%m==0) cnt++;
+    }while(next_permutation(s.begin(), s.end())); //全排列
+    cout << cnt;
+}
+```
+int转string
+```
+    int n = 112;
+    string s = to_string(n);
+```
+一开始就定大小的
+```
+vector<vector<bool>> dp(n + 1, vector<bool>(sum + 1));
+vector<int> dp(amount + 1);
+```
+
+
+memo
+```
+vector<vector<int>> memo;
+memo = vector<vector<int>>(m, vector<int>(n, -1));
+
+        // 查备忘录，避免重叠子问题
+        if (memo[i][j] != -1) {
+            return memo[i][j];
+        }
+memo[i][j] = dp(s1, i - 1, s2, j - 1);
+        
+```
+switch
+```
+switch (sign) {
+    case '+':
+        stk.push(num); break;
+    case '-':
+        stk.push(-num); break;
+}
+
+```
+栈  
+top()是取栈顶元素，不会删除里面的元素，返回栈顶的引用  
+pop()是删除栈顶元素，返回void  
+```
+stack<int> stk;
+        char c = s[i];
+        // 如果是数字，连续读取到 num
+        if (isdigit(c)) 
+
+    while (!stk.empty()) {
+        res += stk.top();
+        stk.pop();
+    }
+```
+字符转数字
+string是双引号
+```
+
+string s = "458";
+
+int n = 0;
+for (int i = 0; i < s.size(); i++) {
+    char c = s[i];
+    n = 10 * n + (c - '0');
+}
+// n 现在就等于 458
+
+```
 c++字符串处理更方便, unordered_map 就是哈希表（字典），相当于 Java 的 HashMap，它的一个方法 count(key) 相当于 Java 的 containsKey(key) 可以判断键 key 是否存在  
 可以使用方括号访问键对应的值 map[key]。需要注意的是，如果该 key 不存在，C++ 会自动创建这个 key，并把 map[key] 赋值为 0  
+
+万能头文件
+```
+# include<bits/stdc++.h>
+```
+
+
+链表找到节点的前一个位置,是需要while遍历的
+while 的单句 {}不能省略
+
+哈希链表
+```
+struct Node {
+    int key, value; // key 是哈希idx
+    Node* next;
+    Node(int _key, int _val): key(_key), value(_val) {} // 赋值函数
+};
+
+unordered_map<int, Node*> map;
+Node* head;
+Node* tail;
+int capacity;
+
+ap.erase(node->key); // 哈希表中删除
+delete node; 内存中删除
+Node* node = head->next;//链表中删除
+
+初始化虚拟头尾节点
+head = new Node(-1, -1);
+tail = new Node(-1, -1);
+head->next = tail;
+tail->next = nullptr; 
+```
+
+二叉树
+```
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+```
+
+判断类型
+```
+xx.isInteger()
+```
+
+注意,vector类型没有top,想要依次取出vector的元素
+```
+vector<int> res;
+vector<int>::iterator it;
+it = res.begin();
+
+int next() {
+    return *it++; // 指针形式 
+}
+
+bool hasNext() {
+    return it != res.end();
+}
+
+```
+
+头文件
+```
+
+```
+遍历vector
+```
+for (auto i = path.begin(); i != path.end(); i++) {
+    std::cout << *i << ' ';
+}
+```
+
 
 vector是数组，申明是vector<int>& num， 快慢指针可以直接用int fast/slow， resize设置总长  
 矩阵 vector<vector<int>>& matrix   设定长度  vector<vector<int>>(m + 1, vector<int>(n + 1))； res.push_back(int)相当于list append 
@@ -333,6 +485,37 @@ for (bool b : used) {
     ss << b;
 }
 string state = ss.str();
+
+```
+stringstream的用法
+将数值类型数据格式化为字符串
+用stringstream可以用指定字符分割字符串
+```
+int main() {
+        std::string data = "1_2_3_4_5_6";
+        std::stringstream ss(data);
+        std::string item;
+        queue<string> q;
+        cout << data << endl;
+        while (std::getline(ss, item, '_')) 
+            cout << item << ' ';  
+}
+```
+cin和geline的异同点
+```
+cin //不读空格
+通常用于读取基本数据类型，如整数、浮点数和字符等，它会忽略输入缓冲区中的空白字符
+如果用户输入了一个数字后按下回车键，cin 将读取该数字，并且回车字符仍然留在输入缓冲区中
+
+getline(cin, line) // 读空格,适合有string的
+```
+
+优先级队列
+
+```
+priority_queue<int> q;//通过操作，按照元素从大到小的顺序出队
+priority_queue<int,vector<int>,greater<int> > q; //通过操作，按照元素从小到大的顺序出队
+
 ```
 进一步，不用哈希表表示，而用位图:用整数 used 的第 i 位（(used >> i) & 1）的 1/0 来表示 used[i] 的 true/false
 ```
@@ -342,13 +525,39 @@ used |= 1 << i; // 做选择, 将第 i 位置为 1
 used ^= 1 << i; // 撤销选择, 使用异或运算将第 i 位恢复 0
 ```
 自定义排序
+less<T>变成升序（从左到右遍历下标时，数组元素是从小到大）
+greater<T>变成降序（从左到右遍历下标时，数组元素是从大到小）
 ```
-sort(clips.begin(), clips.end(), [](const vector<int>& a, const vector<int>& b) {
+#include <algorithm>
+
+sort(clips.begin(), clips.end(), [] (const vector<int>&a, const vector<int>&b) {
+    // cout<<"here: "<< a[0]<<" "<<b[0]<<endl;
     if (a[0] == b[0]) {
-        return b[1] - a[1];
+        return a[1] > b[1]; // 比较右端大小, 大的优先
     }
-    return a[0] - b[0];
+    else {
+        return a[0] < b[0]; // 比较左边大小， 小的优先(升序)
+    }
 });
+```
+函数不能返回数组，但是能返回指针
+```
+void MultMatrix(float M[4], float A[4], float B[4])
+{
+    M[0] = A[0]*B[0] + A[1]*B[2];
+    ...
+}
+
+int main()
+{
+    float A[4] = { 1.75, 0.66, 0, 1.75 };
+    float B[4] = {1, 1, 0, 0};
+
+    float *M = new float[4];
+    MultMatrix(M, A, B);
+    delete[] M;
+    return 0;
+}
 ```
 取随机：
 uniform_int_distribution<int> distribution(i, n - 1)
@@ -359,6 +568,26 @@ TreeNode* constructMaximumBinaryTree(vector<int>& nums) {} //签名
 auto max_it = max_element(nums.begin(), nums.end()); // 找最大值
 int max_idx = distance(nums.begin(), max_it); // 得到最大值的idex
 TreeNode* root = new TreeNode(*max_it); //构造二叉树
+
+```
+定义二维数组（非stl）
+```
+#define N 10000
+int n;
+int a[N][2];
+```
+定义一维数组（非stl）
+```
+int mp[10000001] ={0};
+
+```
+set集合，用来计算总共有多少类元素，很合适
+```
+//迭代
+    set<int> num;
+    for(int& k : mp){
+        if(k>0) num.insert(k); // 直接插，不用管重复不重复
+    }
 
 ```
 
@@ -374,11 +603,11 @@ for (int i = 0; i < inorder.size(); i++) {
     valToIndex[inorder[i]] = i;
 }
 ```
-deque记录结果
+deque记录路径结果
 ```
 // 记录重复的子树根节点
 deque<TreeNode*> res;  
-res.emplace_back(root);
+res.emplace_back(root); //类似
 ```
 hashset是一维的，hashmap是二维的  
 
@@ -402,6 +631,25 @@ void traverse(TreeNode* root, stringstream& ss) {}
     //for call
     vector<string>& nodes
 ```
+字符串处理
+```
+compare比较函数
+相同返回0，不同返回<0或>0
+反转字符串函数：reverse
+string s = "abcde";
+reverse(s.begin(),s.end()); 
+
+字符串凭借
+string name ("John");
+string family ("Smith");
+name += " K. ";         // c-string
+name += family;         // string
+name += 'A';           // character
+
+在末尾插入单个字符
+name.insert(name.end(),'A');
+```
+
 一起的写法
 nums[p] = temp[i++];
 
@@ -493,8 +741,9 @@ priority_queue<int, vector<int>, greater<int>> pq; // 小顶堆，堆顶是最�
     pq.top();
 ```
 完善接口 [多叉树](https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-66994/ti-mu-bu-r-552fb/)
-```
 
+
+```
 class NestedIterator {
 private: // 自己额外写的
     vector<int> res;
@@ -534,13 +783,14 @@ std::vector<NestedInteger> list;
 list.erase(list.begin()); 
 
 base case:
-```
+
     // base case
     if (root == nullptr) {
         return nullptr;
     }
 ```
 如果有找到，返回找到的，如果没有找到，返回无
+
 ```
 class Solution {
 public:
@@ -559,6 +809,126 @@ public:
 }
 ```
 
+迭代字典
+```
+unordered_map<char, int> dict;
+int n = word.size();
+for (int i = 0;i<n;i++) {
+    dict[word[i]]++;
+}
+
+int res;
+int f = n * .1;
+// for (auto it = dict.begin();it != dict.end(); ++it) {
+//     cout<<it->next;
+for(auto it: dict) {
+    cout<<it.first<<it.second<<endl;
+}
+
+```
+
+翻转string
+```
+#include<bits/stdc++.h>
+ using namespace std;
+ 
+ const int MAXL = 3000;
+ int main()
+ {
+     string s;
+     cin>>s;
+     int l = s.size();
+     for (int i = 0; i < l; i++)
+     {
+         string temp = s;
+         reverse(temp.begin(), temp.end());
+         if (s == temp) break;
+         s.insert(s.begin()+l, s[i]);
+     }
+     cout<<s;
+     return 0;
+ }
+
+```
+字符串相关
+
+
+
+```
+  for (string& word : wordDict) {
+      // 看看哪个单词能够匹配 s[i..] 的前缀
+      int len = word.size();
+      if (i + len <= s.size()
+          && s.substr(i, len) == word) {
+          // 找到一个单词匹配 s[i..i+len)
+          // 做选择
+          track.push_back(word);
+          // 进入回溯树的下一层，继续匹配 s[i+len..]
+          backtrack(s, i + len);
+          // 撤销选择
+          track.pop_back();
+      }
+```
+```
+#include <unordered_map>
+std::unordered_map<int, Node*> map;
+
+
+queue<int> q;
+q.push(x);
+q.pop()
+q.front()
+q.empty();  //判断是否empty
+```
+```
+int res = INT_MAX
+```
+
+二维数组申明的时候没法自定义大小,所以改成  
+int dp[n + 1][amount + 1];  
+不过一维数组可以  
+
+方向数组遍历二维数组
+```
+vector<vector<int>> dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+// 递归遍历上下左右的节点
+for (auto &d : dirs) {
+    int next_i = i + d[0];
+    int next_j = j + d[1];
+    dfs(grid, next_i, next_j, visited);
+}
+```
+
+char的比较不能用"",要用''
+grid[k][q]=='1'
+
+
+```
+unordered_set <int> map
+```
+
+
+条件判断不能连续写
+```
+while (0<=cur_x && cur_x<=8 && 0<=cur_y && cur_y<=8)
+```
+
+
+洗牌算法, 快速排序
+// 如果报错栈溢出， 函数返回类型得改为 static xxx 
+```
+注意返回是void，因为写在classs中
+static void swap(int& a, int& b)
+
+swap一定得是， 
+不能是swap(nums, a, b)
+static void swap(int& a, int& b) // 原地交换
+    static void swap(int& a, int& b) {
+        int temp = a;
+        a = b;
+        b = temp;
+    }
+```
 
 # Java  
 Integer 和 String 这种包装类不能直接用 == 进行相等判断，而应该使用类的 equals 方法  
@@ -566,6 +936,7 @@ Integer 和 String 这种包装类不能直接用 == 进行相等判断，而应
 
 # python 
 random.Random.randint(0, n - i - 1)
+float('inf')
 
 
 # NOTES
